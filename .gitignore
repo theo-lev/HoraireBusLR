@@ -1,14 +1,4 @@
 .idea
-.gradle/
-build/
-build.gradle
-gradle.properties
-gradle/
-gradlew
-gradlew.bat
-local.properties
-settings.gradle
-
 
 # Compiled class file
 *.class
