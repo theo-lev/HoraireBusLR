@@ -6,14 +6,14 @@ import androidx.room.Insert
 import androidx.room.Query
 
 @Dao
-interface StopDao {
+interface StopTimeDao {
 
-    @Query("SELECT * FROM Stop")
-    fun getAll(): List<Stop>;
+    @Query("SELECT * FROM StopTime")
+    fun getAll(): List<StopTime>;
 
     @Insert
-    fun insertAll(vararg Stop: Stop)
+    fun insertAll(vararg StopTime: StopTime)
 
     @Delete
-    fun delete(Stop: Stop)
+    fun delete(StopTime: StopTime)
 }
