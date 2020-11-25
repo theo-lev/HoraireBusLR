@@ -8,7 +8,7 @@ interface BusRouteDao {
     @Query("SELECT * FROM BusRoute")
     fun getAll(): List<BusRoute>;
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg busRoute: BusRoute)
 
     @Delete
