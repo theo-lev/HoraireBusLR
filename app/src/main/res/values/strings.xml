@@ -1,7 +1,3 @@
 <resources>
-    <string name="app_name">HoraireBusLR</string>
-    <string name="current_data_id">currentDataId</string>
-    <string name="current_data_url">currentDataUrl</string>
-    <string name="btn_timePicker">Heure</string>
-    <string name="btn_datePicker">Date</string>
+    <string name="app_name">Bus</string>
 </resources>
