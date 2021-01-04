@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Bus</string>
+    <string name="app_name">Star2LR</string>
+    <string name="date_ligne">Date et ligne de bus</string>
+    <string name="bu_date">Date</string>
+    <string name="bu_heure">Heure</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
