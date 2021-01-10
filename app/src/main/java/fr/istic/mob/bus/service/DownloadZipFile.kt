@@ -128,75 +128,70 @@ class DownloadZipFile(private val context: Context, workerParameters: WorkerPara
         }
     }
 
-    private fun readCsvFile(filePath: String, fileName: String?) {
-        val reader = CSVReaderHeaderAware(FileReader(filePath))
-        val resultList = mutableListOf<Map<String, String>>()
-        var line = reader.readMap()
-        while (line != null) {
-            resultList.add(line)
-            line = reader.readMap()
-        }
+    private fun saveDataInDatabase(fileName:String?, lineOfJson:Map<String,String>)
+    {
         when (fileName) {
             "routes.txt" -> {
                 changeNotificationText("routes.txt")
-                resultList.forEach { map: Map<String, String> ->
-                    GlobalScope.launch {
-                        val busRouteEntity = BusRouteEntity.parseBusRouteObject(map)
+                GlobalScope.launch {
+                        val busRouteEntity = BusRouteEntity.parseBusRouteObject(lineOfJson)
                         DataBase.getDataBaseInstance(context = context).busRouteDao()
                             .insertBusRoute(busRouteEntity)
                         Log.d("----------", "i am in routes")
-                        Log.d("size", resultList.size.toString())
                     }
-                }
+
             }
             "trips.txt" -> {
                 changeNotificationText("trips.txt")
-                resultList.forEach { map: Map<String, String> ->
-                    GlobalScope.launch {
-                        val tripEntity = TripEntity.parseTripObject(map)
+                GlobalScope.launch {
+                        val tripEntity = TripEntity.parseTripObject(lineOfJson)
                         DataBase.getDataBaseInstance(context = context).tripDao()
                             .insertTrip(tripEntity)
-                        Log.d("size", resultList.size.toString())
-                    }
+                    Log.d("----------", "trips.txt")
+
                 }
+
             }
-            "stoaps.txt" -> {
+            "stops.txt" -> {
                 changeNotificationText("stops.txt")
-                resultList.forEach { map: Map<String, String> ->
-                    GlobalScope.launch {
-                        val stopEntity = StopEntity.parseStopObject(map)
+                GlobalScope.launch {
+                        val stopEntity = StopEntity.parseStopObject(lineOfJson)
                         DataBase.getDataBaseInstance(context = context).stopDao()
                             .insertStop(stopEntity)
                         Log.d("----------", "stops.txt")
-                        Log.d("size", resultList.size.toString())
                     }
-                }
-            }
-            "stoap_times.txt" -> {
-                Log.d("stop_times----", "i am in csv stop_times with size ${resultList.size}")
 
+            }
+            "stop_times.txt" -> {
                 changeNotificationText("stop_times.txt")
-                resultList.forEachIndexed { index, map: Map<String, String> ->
                     GlobalScope.launch {
-                        val stopTimesEntity = StopTimeEntity.parseStopTimeObject(map)
+                        val stopTimesEntity = StopTimeEntity.parseStopTimeObject(lineOfJson)
                         DataBase.getDataBaseInstance(context = context).stopTimeDao()
                             .insertStopTime(stopTimesEntity)
-                        Log.d("----------", "i am in $index")
+                        Log.d("----------", "stop_times.txt")
+
                     }
-                }
             }
             "calendar.txt" -> {
                 changeNotificationText("calendar.txt")
-                resultList.forEach { map: Map<String, String> ->
                     GlobalScope.launch {
-                        val calendarEntity = CalendarEntity.parseCalendarObject(map)
+                        val calendarEntity = CalendarEntity.parseCalendarObject(lineOfJson)
                         DataBase.getDataBaseInstance(context = context).calendarDao()
                             .insertCalendar(calendarEntity)
                         Log.d("----------", "calendar.txt")
-                        Log.d("size", resultList.size.toString())
                     }
-                }
             }
+        }
+    }
+
+    private fun readCsvFile(filePath: String, fileName: String?) {
+
+            val reader = CSVReaderHeaderAware(FileReader(filePath))
+            var line = reader.readMap()
+            while (line != null) {
+                saveDataInDatabase(fileName, line)
+                line = reader.readMap()
+
         }
     }
 
