@@ -80,6 +80,8 @@ class MainActivity : AppCompatActivity() {
             channel.enableLights(true)
             channel.lightColor = Color.RED
             channel.enableVibration(true)
+            channel.enableVibration(false)
+            channel.vibrationPattern = longArrayOf(0)
             channel.description = "Messages Notification"
             notificationManager.createNotificationChannel(channel)
         }
