@@ -1,5 +1,6 @@
 package fr.istic.mob.bus.data.local.dao
 
+import android.database.Cursor
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -16,4 +17,9 @@ interface BusRouteDao {
 
     @Query("select * from bus_route")
     suspend fun getAllBusRoute(): MutableList<BusRouteEntity>
+
+    @Query("select * from bus_route order by routeId")
+    fun getRouteListCursor(): Cursor?
+
+
 }
